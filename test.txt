@@ -1,0 +1,31 @@
+
+function generatePlane(){
+    plane.geometry.dispose();
+    plane.geometry = new THREE.PlaneGeometry(
+        world.plane.width,
+        world.plane.height,
+        world.plane.widthSegments,
+        world.plane.heightSegments
+    );
+    
+    const {array} = plane.geometry.attributes.position; // récupération des vertices pour l'effet de profondeur dans l'axe Z
+    for (let i = 0; i < array.length; i += 3)
+    {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    // array[i] = x + Math.random() - 0.5;
+    // array[i + 1] = y + Math.random() - 0.5;
+    array[i + 2] = z + Math.random() * .8;
+    }
+    const colors = []
+    for (let i = 0; i < plane.geometry.attributes.position.count; i++){
+        colors.push(0, .19, .4);
+    }
+
+    plane.geometry.setAttribute(
+        'color',
+        new THREE.BufferAttribute(new Float32Array(colors),3) // R, G, B => 3 valeurs de données
+    )
+}
